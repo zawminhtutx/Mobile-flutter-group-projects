@@ -1,3 +1,5 @@
+import 'package:ecommerce_shop/Screens/Home/Widgets/product_cart.dart';
+import 'package:ecommerce_shop/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'Widgets/category.dart';
 import 'Widgets/home_app_bar.dart';
@@ -38,7 +40,32 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Categories()
+              const Categories(),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Special For You',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'See all',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  )
+                ],
+              ),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: products.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  return ProductCart(
+                    product: products[index],
+                  );
+                },
+              )
             ],
           ),
         ),
