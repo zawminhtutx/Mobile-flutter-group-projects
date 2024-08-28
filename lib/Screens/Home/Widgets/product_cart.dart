@@ -1,3 +1,4 @@
+import 'package:ecommerce_shop/Screens/Detail/detail_screen.dart';
 import 'package:ecommerce_shop/constants.dart';
 import 'package:ecommerce_shop/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,15 @@ class ProductCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailCartScreen(
+              product: product,
+            ),
+          ),
+        );
+      },
       child: Stack(
         children: [
           Container(
@@ -29,8 +38,8 @@ class ProductCart extends StatelessWidget {
                 Center(
                   child: Image.asset(
                     product.image,
-                    width: 120,
-                    height: 120,
+                    width: 130,
+                    height: 130,
                   ),
                 ),
                 const SizedBox(
@@ -46,6 +55,32 @@ class ProductCart extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      "\$${product.price}",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(
+                        product.colors.length,
+                        (index) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 4),
+                            width: 18,
+                            height: 18,
+                            decoration: BoxDecoration(
+                                color: product.colors[index],
+                                shape: BoxShape.circle),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

@@ -59,7 +59,9 @@ class HomeScreen extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: products.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.78,
+                    mainAxisSpacing: 20),
                 itemBuilder: (context, index) {
                   return ProductCart(
                     product: products[index],
