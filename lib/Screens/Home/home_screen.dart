@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Widgets/category.dart';
 import 'Widgets/home_app_bar.dart';
 import 'Widgets/image_slider.dart';
 import 'Widgets/search_bar.dart';
@@ -33,7 +34,11 @@ class HomeScreen extends StatelessWidget {
                 onChange: (value) {
                   currentSlide = value;
                 },
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Categories()
             ],
           ),
         ),
