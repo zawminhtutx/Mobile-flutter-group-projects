@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
+
 import '../../../constants.dart';
 
 class MySearchBar extends StatelessWidget {
-  const MySearchBar({
-    super.key,
-  });
+  const MySearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 5,
-      ),
       height: 55,
+      width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        // border: Border.all(),
         color: kcontentColor,
+        borderRadius: BorderRadius.circular(30),
       ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       child: Row(
         children: [
           const Icon(
             Icons.search,
-            size: 30,
             color: Colors.grey,
+            size: 30,
           ),
+          const SizedBox(width: 10),
           const Flexible(
             flex: 4,
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Serarch...',
-                border: InputBorder.none,
-              ),
+                  hintText: "Search...", border: InputBorder.none),
             ),
           ),
           Container(
@@ -41,11 +36,12 @@ class MySearchBar extends StatelessWidget {
             color: Colors.grey,
           ),
           IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.tune,
-                color: Colors.grey,
-              ))
+            onPressed: () {},
+            icon: const Icon(
+              Icons.tune,
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );

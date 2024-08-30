@@ -1,38 +1,50 @@
-import 'package:ecommerce_shop/Screens/Detail/Widgets/addto_cart.dart';
-import 'package:ecommerce_shop/Screens/Detail/Widgets/description.dart';
-import 'package:ecommerce_shop/Screens/Detail/Widgets/detail_app_bar.dart';
-import 'package:ecommerce_shop/Screens/Detail/Widgets/image_slider.dart';
-import 'package:ecommerce_shop/Screens/Detail/Widgets/item_detail.dart';
-import 'package:ecommerce_shop/models/product_model.dart';
 import 'package:flutter/material.dart';
 
-class DetailCartScreen extends StatefulWidget {
+import '../../constants.dart';
+import '../../models/product_model.dart';
+import 'Widget/addto_cart.dart';
+import 'Widget/description.dart';
+import 'Widget/detail_app_bar.dart';
+import 'Widget/image_slider.dart';
+import 'Widget/items_details.dart';
+
+class DetailScreen extends StatefulWidget {
   final Product product;
-  const DetailCartScreen({super.key, required this.product});
+  const DetailScreen({super.key, required this.product});
 
   @override
-  State<DetailCartScreen> createState() => _DetailCartScreenState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailCartScreenState extends State<DetailCartScreen> {
+class _DetailScreenState extends State<DetailScreen> {
+  int currentImage = 0;
+  int currentColor = 1;
   @override
   Widget build(BuildContext context) {
-    int currentImage = 0;
-    int currentColor = 1;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kcontentColor,
+      // for add to cart , icon and quantity
+      floatingActionButton: AddToCart(product: widget.product),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: SafeArea(
+          child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const DetailAppBar(),
-            DetailImageSlider(
+            // for back button share and favorite,
+            DetailAppBar(
+              product: widget.product,
+            ),
+            // for detail image slider
+            MyImageSlider(
+              image: widget.product.image,
               onChange: (index) {
                 setState(() {
                   currentImage = index;
                 });
               },
-              image: widget.product.image,
             ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -54,41 +66,33 @@ class _DetailCartScreenState extends State<DetailCartScreen> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
-                bottom: 100,
-              ),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
+                  topLeft: Radius.circular(40),
                 ),
+              ),
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: 100,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //for product name,price,rating and seller
-                  ItemDetail(
-                    product: widget.product,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // for product name, price, rating, and seller
+                  ItemsDetails(product: widget.product),
+                  const SizedBox(height: 20),
                   const Text(
-                    'Color',
+                    "Color",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     children: List.generate(
                       widget.product.colors.length,
@@ -103,15 +107,15 @@ class _DetailCartScreenState extends State<DetailCartScreen> {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: currentColor == index
+                                ? Colors.white
+                                : widget.product.colors[index],
                             border: currentColor == index
                                 ? Border.all(
                                     color: widget.product.colors[index],
                                   )
                                 : null,
-                            color: currentColor == index
-                                ? Colors.white
-                                : widget.product.colors[index],
-                            shape: BoxShape.circle,
                           ),
                           padding: currentColor == index
                               ? const EdgeInsets.all(2)
@@ -121,29 +125,24 @@ class _DetailCartScreenState extends State<DetailCartScreen> {
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
-                              color: widget.product.colors[index],
-                              shape: BoxShape.circle,
-                            ),
+                                color: widget.product.colors[index],
+                                shape: BoxShape.circle),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  //for Description
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  DetailDescription(
-                    text: widget.product.description,
-                  ),
+                  const SizedBox(height: 25),
+                  // for description
+                  Description(
+                    description: widget.product.description,
+                  )
                 ],
               ),
             )
           ],
         ),
-      ),
-      floatingActionButton: AddToCart(product: widget.product),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      )),
     );
   }
 }

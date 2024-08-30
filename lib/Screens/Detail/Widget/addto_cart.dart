@@ -1,24 +1,25 @@
-import 'package:ecommerce_shop/constants.dart';
-import 'package:ecommerce_shop/models/product_model.dart';
 import 'package:flutter/material.dart';
+
+import '../../../Provider/cart_provider.dart';
+import '../../../constants.dart';
+import '../../../models/product_model.dart';
 
 class AddToCart extends StatefulWidget {
   final Product product;
-  const AddToCart({
-    super.key,
-    required this.product,
-  });
+  const AddToCart({super.key, required this.product});
 
   @override
   State<AddToCart> createState() => _AddToCartState();
 }
 
 class _AddToCartState extends State<AddToCart> {
+  int currentIndex = 1;
+
   @override
   Widget build(BuildContext context) {
-    int currentIndex = 1;
+    final provider = CartProvider.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         height: 85,
         decoration: BoxDecoration(
@@ -39,16 +40,20 @@ class _AddToCartState extends State<AddToCart> {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (currentIndex != 1) {
+                        setState(() {
+                          currentIndex--;
+                        });
+                      }
+                    },
+                    iconSize: 18,
                     icon: const Icon(
                       Icons.remove,
-                      size: 18,
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
+                  const SizedBox(width: 5),
                   Text(
                     currentIndex.toString(),
                     style: const TextStyle(
@@ -56,33 +61,52 @@ class _AddToCartState extends State<AddToCart> {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(
-                    width: 5,
-                  ),
+                  const SizedBox(width: 5),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        currentIndex++;
+                      });
+                    },
+                    iconSize: 18,
                     icon: const Icon(
                       Icons.add,
-                      size: 18,
                       color: Colors.white,
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                provider.toggleFavorite(widget.product);
+                const snackBar = SnackBar(
+                  content: Text(
+                    "Successfully added!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                  duration: Duration(seconds: 1),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
                   color: kprimaryColor,
+                  borderRadius: BorderRadius.circular(50),
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Add to Cart',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  "Add to Cart",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
                 ),
               ),
             )

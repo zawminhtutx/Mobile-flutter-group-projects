@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
@@ -11,18 +13,24 @@ class CustomAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
+          style: IconButton.styleFrom(
+            backgroundColor: kcontentColor,
+            padding: const EdgeInsets.all(15),
+          ),
           onPressed: () {},
           icon: Image.asset(
-            'images/icon.png',
+            "images/icon.png",
             height: 20,
           ),
         ),
         IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.notification_add_outlined,
-            size: 30,
+          style: IconButton.styleFrom(
+            backgroundColor: kcontentColor,
+            padding: const EdgeInsets.all(15),
           ),
+          onPressed: () {},
+          iconSize: 30,
+          icon: const Icon(Icons.notifications_outlined),
         ),
       ],
     );

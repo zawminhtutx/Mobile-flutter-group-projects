@@ -1,16 +1,15 @@
-import 'package:ecommerce_shop/constants.dart';
 import 'package:flutter/material.dart';
 
-class DetailDescription extends StatelessWidget {
-  final String text;
-  const DetailDescription({
-    super.key,
-    required this.text,
-  });
+import '../../../constants.dart';
+
+class Description extends StatelessWidget {
+  final String description;
+  const Description({super.key, required this.description});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -19,43 +18,40 @@ class DetailDescription extends StatelessWidget {
               width: 120,
               height: 40,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
                 color: kprimaryColor,
+                borderRadius: BorderRadius.circular(20),
               ),
               alignment: Alignment.center,
               child: const Text(
-                'Description',
+                "Description",
                 style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 16),
               ),
             ),
             const Text(
-              'Specification',
+              "Specifications",
               style: TextStyle(
-                  fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey),
+                  color: Colors.black,
+                  fontSize: 16),
             ),
             const Text(
-              'Reviews',
+              "Reviews",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Colors.black,
               ),
             ),
           ],
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 20),
         Text(
-          text,
-          // overflow: TextOverflow.ellipsis,
+          description,
           style: const TextStyle(
-            fontSize: 12,
+            fontSize: 16,
             color: Colors.grey,
           ),
         ),
